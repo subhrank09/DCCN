@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+    char ip[20];
+    int oct1,oct2,oct3,oct4;
+
+    printf("Enter the Ip Address");
+    scanf("%s", &ip);
+    if(sscanf(ip, "%d.%d.%d.%d",&oct1,&oct2,&oct3,&oct4) != 4) { 
+        printf("Invalid IP");
+        return 1;
+    }
+
+    if(oct1 < 0 || oct1 > 255 || oct2 < 0 || oct2 > 255 || oct3 < 0 || oct3 > 255 || oct4 < 0 || oct4 > 255 ) {
+        printf("Invalid IP");
+        return 1;
+    }
+    if (oct1 >= 1 && oct1 <= 126) {
+        printf("Class A\n");
+    }else if (oct1 == 127) {
+        printf("Loopback Address(Reserved)\n");
+    }else if (oct1 >= 128 && oct1 <= 191) {
+        printf("Class B\n");
+    }else if (oct1 >= 192 && oct1 <= 223) {
+        printf("Class C\n");
+    }else if (oct1 >= 224 && oct1 <= 239) {
+        printf("Class D(Multicast)\n");
+    }else if(oct1 >= 240 && oct1 <= 254){
+        printf("Class E(Experimental)\n");
+    }else {
+        printf("Invalid or Reserved IP");
+    }
+    return 1;
+}
