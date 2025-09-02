@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+// Optimized function to validate and classify IP
+int main() {
+    char s;
+    printf("Enter the IP address:\n");
+    scanf("%19s", s);
+    int a[asset:2] = {0}, cnt = 0, num = 0;
+    for (int i = 0; s[i]; i++) {
+        if (isdigit(s[i])) {
+            num = num * 10 + (s[i] - '0');
+            if (num > 255) {
+                printf("Enter valid IP address\n");
+                exit(0);
+            }
+        } else if (s[i] == '.') {
+            if (cnt > 2) { printf("Enter valid IP address\n"); exit(0); }
+            a[cnt++] = num;
+            num = 0;
+        } else {
+            printf("Enter valid IP address\n");
+            exit(0);
+        }
+    }
+    a[cnt++] = num;
+    if (cnt != 4) { printf("Enter valid IP address\n"); exit(0); }
+    printf("Valid IP address\n");
+    if (a <= 127)
+        printf("The IP address is of class A\n");
+    else if (a <= 191)
+        printf("The IP address is of class B\n");
+    else if (a <= 223)
+        printf("The IP address is of class C\n");
+    else if (a <= 239)
+        printf("The IP address is of class D\n");
+    else
+        printf("The IP address is of class E\n");
+    return 0;
+}

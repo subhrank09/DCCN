@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    cout << "Enter the IP address:\n";
+    string s;
+    cin >> s;
+    int n = s.size();
+    int num = 0;
+    vector<int> a;
+    for(int i = 0; i < n; i++) {
+         if(isdigit(s[i])){if (num == 0 && s[i] - '0' == 0)
+		cout << "Enter Valid IP Address\n";exit(0);}
+		num *= 10;
+		num+=(s[i]-'0');}
+	elseif (s[i] == '0'){
+		if(i==0||(i-1)>=0&& s[i-1]=='.'){
+		cout<<"Enter Valid IP Address\n";}
+exit(0);}
+            }
+    a.push_back(num);
+    if(a.size() != 4) {
+        cout << "Enter valid IP address\n";
+        exit(0);
+    }
+    for (int i = 0; i < 4; i++) {
+        if(a[i] > 255) {
+            cout << "Enter valid IP address\n";
+            exit(0);
+        }
+    }
+    cout << "Valid IP address\n";
+    if(a[0] <= 127) {
+        cout << "The IP address is of class A\n";
+    } else if(a[0] <= 191) {
+        cout << "The IP address is of class B\n";
+    } else if(a[0] <= 223) {
+        cout << "The IP address is of class C\n";
+    } else if(a[0] <= 239) {
+        cout << "The IP address is of class D\n";
+    } else {
+        cout << "The IP address is of class E\n";
+    }
+    return 0;
+}

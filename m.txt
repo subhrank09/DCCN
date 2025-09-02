@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+// Convert decimal to 8-bit binary string
+void toBinary(int n, char *bin) {
+    for (int i = 7; i >= 0; i--) {
+        bin[7 - i] = (n & (1 << i)) ? '1' : '0';
+    }
+    bin[8] = '\0';
+}
+
+// Validate IP and extract octets
+int validateIP(const char *ip, int arr[4]) {
+    int num = 0, dots = 0, idx = 0;
+    const char *p = ip;
+
+    while (*p) {
+        if (isdigit(*p)) {
+            num = num * 10 + (*p - '0');
+            if (num > 255) return 0;  // invalid octet
+        } else if (*p == '.') {
+            if (dots >= 3) return 0;
+            arr[idx++] = num;
+            num = 0;
+            dots++;
+        } else {
+            return 0; // invalid character
+        }
+        p++;
+    }
+    arr[idx] = num;
+    return (dots == 3 && idx == 3);  // must have 4 parts
+}
+
+// Find IP class
+char getIPClass(int firstOctet) {
+    if (firstOctet <= 127) return 'A';
+    else if (firstOctet <= 191) return 'B';
+    else if (firstOctet <= 223) return 'C';
+    else if (firstOctet <= 239) return 'D';
+    else return 'E';
+}
+
+int main() {
+    char ip[50];
+    int arr[4];
+    char bin[9];
+
+    printf("Enter IP address: ");
+    scanf("%49s", ip);
+
+    if (!validateIP(ip, arr)) {
+        printf("Invalid IP address!\n");
+        return 0;
+    }
+
+    printf("The IP address is valid.\n");
+
+    char cls = getIPClass(arr[0]);
+    printf("The IP address is of Class %c\n", cls);
+
+    printf("IP address in Binary: ");
+    for (int i = 0; i < 4; i++) {
+        toBinary(arr[i], bin);
+        printf("%s", bin);
+        if (i != 3) printf(".");
+    }
+    printf("\n");
+
+    return 0;
+}
